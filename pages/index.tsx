@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSidePropsContext, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
@@ -84,10 +84,12 @@ const Home: NextPage<IProps> = ({ data }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const baseUrl = "http://localhost:3000/"; // Cambiar por la url del proyecto una vez deployada la API
 
-  const response = await fetch(`${baseUrl}/api/products`);
+  const locale = context.locale
+
+  const response = await fetch(`${baseUrl}/api/products/${locale}`);
 
   const data = await response.json();
 

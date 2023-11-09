@@ -3,11 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "../../../styles/Header.module.css";
 import { useRouter } from "next/router";
+import { TEXTS_BY_LANGUAGE, localeNames } from "../../../locale/constants";
 
-const Header = ({locale}) => {
+const Header = () => {
   const router = useRouter();
-
-  console.log(locale);
 
   return (
     <header className={styles.header}>
@@ -21,33 +20,22 @@ const Header = ({locale}) => {
         </div>
       </div>
       <div className={styles.navbar}>
-        <Link href="/" locale="es-ES">
-          ES
+        <Link href={router.pathname } locale="es-ES">
+          {localeNames["es-ES"]}
         </Link>
-        <Link href="/" locale="en-US">
-          EN
+        <Link href={router.pathname } locale="en-US">
+          {localeNames["en-US"]}
         </Link>
-        <Link href="/" locale="pt-BR">
-          PT
+        <Link href={router.pathname } locale="pt-BR">
+          {localeNames["pt-BR"]}
         </Link>
       </div>
-      {/* <Link href="/" locale="en-US">cambio a ingles</Link> */}
       <div className={styles.navbar}>
-        <Link href="./"> Productos destacados</Link>
-        <Link href="./tycs"> Tèrminos y condiciones </Link>
+        <Link href="./"> {TEXTS_BY_LANGUAGE[router.locale].HEADER.PRODUCTS} </Link>
+        <Link href="./tycs"> {TEXTS_BY_LANGUAGE[router.locale].HEADER.TYCS} </Link>
       </div>
     </header>
   );
 };
-export async function getServerSideProps(context) {
-  // const { lan } = context.params; 
-  console.log(context)
-
-  return {
-    props: {
-      locale,
-    },
-  };
-}
 
 export default Header;

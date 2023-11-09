@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { GetStaticPropsContext, NextPage } from "next";
 import React from "react";
 import { TyC, TyCsAPIResponse } from "../types";
 import styles from "../styles/TYC.module.css";
@@ -36,10 +36,12 @@ const TerminosYCondiciones: NextPage<IProps> = ({ data }) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const baseUrl = "http://localhost:3000/"; // Cambiar por la url del proyecto una vez deployada la API
 
-  const response = await fetch(`${baseUrl}/api/tycs`);
+  const locale = context.locale
+
+  const response = await fetch(`${baseUrl}/api/tycs/${locale}`);
 
   const data = await response.json();
 
